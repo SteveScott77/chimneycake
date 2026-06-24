@@ -1495,17 +1495,25 @@ button {
 
 .socials {
   display: flex;
-  gap: 18px;
+  align-items: center;
+  gap: 20px;
+}
+
+.socials a {
+  display: inline-flex;
+  align-items: center;
+  color: var(--text);
+  transition: color 0.2s ease;
+}
+
+.socials a:hover {
+  color: #fff;
 }
 
 .socials svg {
-  width: 22px;
   height: 22px;
-  fill: var(--text);
-}
-
-.socials a:hover svg {
-  fill: #fff;
+  width: auto;
+  fill: currentColor;
 }
 
 /* ---------- Responsive ---------- */
