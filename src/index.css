@@ -22,6 +22,15 @@ body {
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+/* offset anchor targets so they land below the sticky header */
+[id] {
+  scroll-margin-top: 110px;
+}
+
 body {
   background: var(--bg);
   color: var(--text);
