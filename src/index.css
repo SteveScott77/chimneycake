@@ -160,6 +160,7 @@ button {
   height: 130px;
   border-radius: 50%;
   object-fit: cover;
+  background-color: var(--bg);
   position: relative;
   z-index: 2;
   transform: translateY(28px);
@@ -1573,22 +1574,244 @@ button {
   .hero h1 {
     font-size: 40px;
   }
-  .hero-bg {
-    right: 16px;
-    border-radius: 0 14px 14px 0;
-  }
   .whatis .container {
     grid-template-columns: 1fr;
   }
-  .flavor-cards,
-  .why-cards,
-  .review-cards,
-  .loc-cards,
-  .gallery-grid,
-  .footer-top {
+  .why-cards {
     grid-template-columns: 1fr;
   }
   .nav-links {
     display: none;
+  }
+}
+
+/* ---------- Mobile carousels (Meet the Cone / Classic) ---------- */
+.cone-mtrack,
+.classic-mtrack {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding: 20px 16px 6px;
+}
+
+.cone-mtrack::-webkit-scrollbar,
+.classic-mtrack::-webkit-scrollbar {
+  display: none;
+}
+
+.cone-mcard {
+  flex: none;
+  width: 78vw;
+  max-width: 330px;
+  scroll-snap-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cone-mcard img {
+  width: 100%;
+  height: auto;
+}
+
+.cone-mnote {
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--text);
+  text-align: center;
+}
+
+.classic-mtrack > div {
+  flex: none;
+  width: 72vw;
+  max-width: 300px;
+  scroll-snap-align: center;
+}
+
+.classic-mtrack .flavor-card {
+  height: 380px;
+}
+
+/* ---------- Mobile (<= 640px) ---------- */
+@media (max-width: 640px) {
+  .section {
+    padding: 48px 0;
+  }
+  .container {
+    padding: 0 16px;
+  }
+  .section-title,
+  .whatis h2 {
+    font-size: 30px;
+  }
+
+  /* header — big logo intersecting the hero, shrinks into place on scroll */
+  .header .container {
+    height: 72px;
+  }
+  .logo-emblem {
+    width: 120px;
+    height: 120px;
+    transform: translateY(32px);
+  }
+  .header.scrolled .logo-emblem {
+    width: 52px;
+    height: 52px;
+    transform: translateY(0);
+  }
+
+  /* hero — image on top, text below */
+  .hero {
+    flex-direction: column;
+    min-height: auto;
+  }
+  .hero-bg {
+    position: relative;
+    inset: auto;
+    height: 240px;
+    margin: 0 16px;
+    border-radius: 16px;
+  }
+  .hero-bg::after {
+    display: none;
+  }
+  .hero .container {
+    max-width: none;
+    margin: 0;
+    padding: 24px 16px 8px;
+  }
+  .hero h1 {
+    font-size: 30px;
+    max-width: none;
+  }
+  .hero-lead {
+    font-size: 16px;
+    margin: 16px 0 24px;
+  }
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hero-actions .btn-3d {
+    width: 100%;
+  }
+  .hero-actions .btn-3d:nth-child(2) {
+    display: none;
+  }
+  .hero h1 .hl::before {
+    border-radius: 6px;
+  }
+  .hero-features {
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 30px;
+  }
+
+  /* what is */
+  .whatis .container {
+    gap: 24px;
+  }
+  .whatis-media img {
+    width: 100%;
+    margin-left: 0;
+  }
+  .tags {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  /* meet the cone */
+  .cone-head {
+    padding: 20px 16px 8px;
+  }
+  .cone-head .section-title,
+  .cone-head .section-sub {
+    text-align: left;
+    margin-left: 0;
+  }
+
+  /* classic */
+  .classic .container {
+    padding-top: 20px;
+  }
+  .classic .carousel-nav {
+    justify-content: center;
+    width: 72vw;
+    max-width: 300px;
+    margin-left: 16px;
+    margin-top: 16px;
+  }
+
+  /* why — full-width stacked */
+  .why .section-title,
+  .why .section-sub {
+    text-align: left;
+    margin-left: 0;
+  }
+  .why-cards {
+    width: 100%;
+    margin-left: 0;
+    transform: none;
+    gap: 18px;
+  }
+  .why-caption {
+    padding: 20px;
+  }
+
+  /* locations slider */
+  .loc-card {
+    width: 82vw;
+    max-width: 330px;
+    height: 320px;
+  }
+  .map-embed {
+    height: 360px;
+  }
+
+  /* gallery coverflow */
+  .gallery-window {
+    margin-top: 40px;
+  }
+  .gallery-item {
+    width: 76vw;
+    max-width: 300px;
+    height: 300px;
+  }
+
+  /* reviews */
+  .reviews-head {
+    font-size: 24px;
+  }
+
+  /* footer */
+  .footer {
+    padding-top: 50px;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px 16px;
+  }
+  .footer-emblem {
+    position: static;
+    grid-column: 1 / -1;
+    width: 110px;
+    height: 110px;
+    margin-bottom: 8px;
+  }
+  .footer-top > .footer-col:nth-of-type(1) {
+    grid-column: 1 / -1;
+  }
+  .footer-bar .container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    min-height: 0;
+    padding-top: 22px;
+    padding-bottom: 36px;
   }
 }

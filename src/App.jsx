@@ -1,5 +1,19 @@
 import { useState, useEffect, useRef } from 'react'
 
+/* ---------------- Hooks ---------------- */
+function useIsMobile(bp = 640) {
+  const [mobile, setMobile] = useState(
+    typeof window !== 'undefined' ? window.innerWidth <= bp : false,
+  )
+  useEffect(() => {
+    const onResize = () => setMobile(window.innerWidth <= bp)
+    onResize()
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [bp])
+  return mobile
+}
+
 /* ---------------- Data ---------------- */
 const CONE_FLAVORS = [
   {
@@ -324,10 +338,12 @@ function WhatIs() {
 
 /* ---------------- Meet the cone ---------------- */
 function MeetTheCone() {
+  const isMobile = useIsMobile()
   const [active, setActive] = useState(0)
   const scrollRef = useRef(null)
 
   useEffect(() => {
+    if (isMobile) return
     const onScroll = () => {
       const el = scrollRef.current
       if (!el) return
@@ -347,21 +363,48 @@ function MeetTheCone() {
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onScroll)
     }
-  }, [])
+  }, [isMobile])
 
   const cone = CONE_FLAVORS[active]
+
+  const head = (
+    <div className="container cone-head">
+      <h2 className="section-title center">
+        Meet the Chimney <span className="accent">Cone</span>
+      </h2>
+      <p className="section-sub center">
+        Our chimney cones take the classic pastry and turn it into a filled
+        dessert: soft serve, Nutella, whipped cream, chocolate and toppings
+        inside a freshly baked chimney cake cone.
+      </p>
+    </div>
+  )
+
+  if (isMobile) {
+    return (
+      <section className="cone" id="products">
+        {head}
+        <div className="container">
+          <div className="cone-more">
+            <span className="plus" aria-hidden />
+            <img src="/assets/nutella-logo.png" alt="Nutella" />
+          </div>
+        </div>
+        <div className="cone-mtrack">
+          {CONE_FLAVORS.map((f) => (
+            <div className="cone-mcard" key={f.name}>
+              <img src={f.img} alt={f.name} />
+              {f.note && <p className="cone-mnote">{f.note}</p>}
+            </div>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
   return (
     <section className="cone" id="products">
-      <div className="container cone-head">
-        <h2 className="section-title center">
-          Meet the Chimney <span className="accent">Cone</span>
-        </h2>
-        <p className="section-sub center">
-          Our chimney cones take the classic pastry and turn it into a filled
-          dessert: soft serve, Nutella, whipped cream, chocolate and toppings
-          inside a freshly baked chimney cake cone.
-        </p>
-      </div>
+      {head}
       <div className="cone-scroll" ref={scrollRef}>
         <div className="cone-sticky">
           <div className="container cone-grid">
@@ -430,12 +473,47 @@ function ConeLineArt() {
   )
 }
 
+const ClassicIntro = () => (
+  <div className="classic-intro">
+    <h2 className="section-title">
+      The classic chimney <span className="accent">cake</span> experience
+    </h2>
+    <p>
+      Our classic chimney cakes are freshly baked, rolled in sugar,
+      caramelised over heat and coated in your favourite flavour. Simple,
+      warm, sweet and made to be enjoyed on the go.
+    </p>
+    <div className="flavor-tabs">
+      <span className="plus" aria-hidden />
+      <img src="/assets/nutella-logo.png" alt="Nutella" />
+      <span className="tab-slash" aria-hidden />
+      <span className="tab-pistachio">Pistachio</span>
+    </div>
+  </div>
+)
+
+const FlavorCard = ({ c }) => (
+  <div>
+    <div className="flavor-card">
+      <img className="cone-base" src={c.img} alt={c.name} />
+      <img className="cone-hover" src={c.hover} alt="" aria-hidden />
+    </div>
+    <div className="flavor-meta">
+      <div className="name">{c.name}</div>
+      <div className="hu">{c.hu}</div>
+    </div>
+  </div>
+)
+
 function ClassicExperience() {
+  const isMobile = useIsMobile()
   const scrollRef = useRef(null)
   const trackRef = useRef(null)
   const cardsRef = useRef(null)
+  const mtrackRef = useRef(null)
 
   useEffect(() => {
+    if (isMobile) return
     const onScroll = () => {
       const el = scrollRef.current
       const cards = cardsRef.current
@@ -454,7 +532,35 @@ function ClassicExperience() {
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onScroll)
     }
-  }, [])
+  }, [isMobile])
+
+  const slide = (dir) => {
+    const el = mtrackRef.current
+    if (el) el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: 'smooth' })
+  }
+
+  if (isMobile) {
+    return (
+      <section className="classic" id="classic">
+        <div className="container">
+          <ClassicIntro />
+        </div>
+        <div className="classic-mtrack" ref={mtrackRef}>
+          {FLAVOR_CARDS.map((c) => (
+            <FlavorCard c={c} key={c.name} />
+          ))}
+        </div>
+        <div className="carousel-nav">
+          <button className="round-btn" onClick={() => slide(-1)} aria-label="Previous">
+            <ArrowLeft />
+          </button>
+          <button className="round-btn" onClick={() => slide(1)} aria-label="Next">
+            <ArrowRight />
+          </button>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section className="classic" id="classic">
