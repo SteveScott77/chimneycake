@@ -89,15 +89,15 @@ const WHY_CARDS = [
 
 const LOC_HOURS = 'Sunday – Thursday: 11:00 – 22:00\nFriday – Saturday: 11:00 – 23:00'
 const LOCATIONS = [
-  { name: 'Váci utca', img: '/assets/loc-vaci.png', addr: '1052 Budapest, Váci u. 11/B.', hours: LOC_HOURS, cid: '13599539892897907328' },
-  { name: 'Fashion street', img: '/assets/loc-fashion.png', addr: '1051 Budapest, Deák Ferenc u. 10.', hours: LOC_HOURS, cid: '16718429277565892994' },
-  { name: 'Akvárium', img: '/assets/loc-akvarium.png', addr: '1051 Budapest, Erzsébet tér 12.', hours: LOC_HOURS, cid: '18311191613973595767' },
-  { name: 'Deák tér', img: '/assets/loc-deak.png', addr: '1052 Budapest, Deák Ferenc tér 3.', hours: LOC_HOURS, cid: '15644560448914780515' },
-  { name: 'Madách tér', img: '/assets/loc-madach.png', addr: '1075 Budapest, Károly krt. 13-15.', hours: LOC_HOURS, cid: '16663013220313701957' },
-  { name: 'Bazilika', img: '/assets/loc-bazilika.jpg', addr: '1051 Budapest, Szent István tér 2.', hours: LOC_HOURS, cid: '11089372304823282514' },
-  { name: 'Zrínyi utca', img: '/assets/loc-zrinyi.jpg', addr: '1051 Budapest, Zrínyi u. 14.', hours: LOC_HOURS, cid: '145345763919310174' },
-  { name: 'Kígyó utca', placeholder: true, addr: '1052 Budapest, Kígyó u. 2.', hours: LOC_HOURS, cid: '3128396529710505300' },
-  { name: 'Sas utca', placeholder: true, addr: '1051 Budapest, Sas u. 10.', hours: LOC_HOURS, cid: '11826260180090323375' },
+  { name: 'Váci utca', img: '/assets/loc-vaci.png', addr: '1052 Budapest, Váci u. 11/B.', hours: LOC_HOURS, cid: '13599539892897907328', mapUrl: 'https://www.google.com/maps?cid=13599539892897907328' },
+  { name: 'Fashion street', img: '/assets/loc-fashion.png', addr: '1051 Budapest, Deák Ferenc u. 10.', hours: LOC_HOURS, cid: '16718429277565892994', mapUrl: 'https://www.google.com/maps?cid=16718429277565892994' },
+  { name: 'Akvárium', img: '/assets/loc-akvarium.png', addr: '1051 Budapest, Erzsébet tér 12.', hours: LOC_HOURS, cid: '18311191613973595767', mapUrl: 'https://www.google.com/maps?cid=18311191613973595767' },
+  { name: 'Deák tér', img: '/assets/loc-deak.png', addr: '1052 Budapest, Deák Ferenc tér 3.', hours: LOC_HOURS, cid: '15644560448914780515', mapUrl: 'https://www.google.com/maps?cid=15644560448914780515' },
+  { name: 'Madách tér', img: '/assets/loc-madach.png', addr: '1075 Budapest, Károly krt. 13-15.', hours: LOC_HOURS, cid: '16663013220313701957', mapUrl: 'https://www.google.com/maps?cid=16663013220313701957' },
+  { name: 'Bazilika', img: '/assets/loc-bazilika.jpg', addr: '1051 Budapest, Szent István tér 2.', hours: LOC_HOURS, cid: '11089372304823282514', mapUrl: 'https://www.google.com/maps?cid=11089372304823282514' },
+  { name: 'Zrínyi utca', img: '/assets/loc-zrinyi.jpg', addr: '1051 Budapest, Zrínyi u. 14.', hours: LOC_HOURS, cid: '145345763919310174', mapUrl: 'https://www.google.com/maps/place/CHIMNEY+CAKE+SHOP/@47.5005332,19.0506973,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dd003e48829f:0x2045f33c404ad5e!8m2!3d47.5005332!4d19.0506973!16s%2Fg%2F11z2mdtyzn' },
+  { name: 'Kígyó utca', placeholder: true, addr: '1052 Budapest, Kígyó u. 2.', hours: LOC_HOURS, cid: '3128396529710505300', mapUrl: 'https://www.google.com/maps/place/Budapest,+K%C3%ADgy%C3%B3+u.+2,+1052/@47.4930185,19.0533128,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc46b0a09dbd:0x2b6a4c119df59d54!8m2!3d47.4930185!4d19.0533128!16s%2Fg%2F11w83vp_xv' },
+  { name: 'Sas utca', placeholder: true, addr: '1051 Budapest, Sas u. 10.', hours: LOC_HOURS, cid: '11826260180090323375', mapUrl: 'https://www.google.com/maps?cid=11826260180090323375' },
 ]
 
 const REVIEWS = [
@@ -156,18 +156,6 @@ const FAQS = [
     q: 'Do you have vegan or lactose-free options?',
     a: 'Yes — we offer vegan, lactose-free and egg-free options so everyone can enjoy a chimney cake.',
   },
-]
-
-const FOOTER_RESTAURANTS = [
-  'VÁCI UTCA: 1052 Budapest, Váci u. 11/B.',
-  'FASHION STREET: 1051 Budapest, Deák Ferenc u. 10.',
-  'AKVÁRIUM: 1051 Budapest, Erzsébet tér 12.',
-  'DEÁK TÉR: 1052 Budapest, Deák Ferenc tér 3.',
-  'MADÁCH TÉR: 1075 Budapest, Károly krt. 13-15.',
-  'BAZILIKA: 1051 Budapest, Szent István tér 2.',
-  'ZRÍNYI UTCA: 1051 Budapest, Zrínyi u. 14.',
-  'KÍGYÓ UTCA: 1052 Budapest, Kígyó u. 2.',
-  'SAS UTCA: 1051 Budapest, Sas u. 10.',
 ]
 
 /* ---------------- Small components ---------------- */
@@ -750,7 +738,15 @@ function Locations() {
                     <div className="loc-detail">
                       <p className="addr">{l.addr}</p>
                       <p className="hours">{l.hours}</p>
-                      <a className="btn-maps" href="#map">Open in maps</a>
+                      <a
+                        className="btn-maps"
+                        href={l.mapUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        Open in maps
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -976,7 +972,16 @@ function Footer() {
         <img className="footer-emblem" src="/assets/logo-emblema.png" alt="Chimney Cake Shop" loading="lazy" />
         <div className="footer-col">
           <h5>Restaurants</h5>
-          {FOOTER_RESTAURANTS.map((r) => <p key={r}>{r}</p>)}
+          {LOCATIONS.map((l) => (
+            <a
+              key={l.name}
+              href={l.mapUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {l.name.toUpperCase()}: {l.addr}
+            </a>
+          ))}
         </div>
         <div className="footer-col">
           <h5>Sitemap</h5>
@@ -999,7 +1004,7 @@ function Footer() {
             <p>A weboldalt a Chimney Cake megbízásából a Peppersgroup készítette.</p>
           </div>
           <div className="footer-right">
-            <span className="footer-email">chimneycakeshop.hu@gmail.com</span>
+            <a className="footer-email" href="mailto:chimneycakeshop.hu@gmail.com">chimneycakeshop.hu@gmail.com</a>
             <div className="socials">
               <a
                 href="https://www.facebook.com/chimneycakeshop.hu"
