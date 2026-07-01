@@ -313,7 +313,7 @@ function WhatIs() {
     <section className="section whatis" id="story">
       <div className="container">
         <div className="whatis-media">
-          <img src="/assets/almond.png" alt="A freshly baked chimney cake" />
+          <img src="/assets/almond.png" alt="A freshly baked chimney cake" loading="lazy" />
         </div>
         <div className="whatis-text">
           <h2>What is <span className="accent">chimney cake?</span></h2>
@@ -393,7 +393,7 @@ function MeetTheCone() {
         <div className="cone-mtrack">
           {CONE_FLAVORS.map((f) => (
             <div className="cone-mcard" key={f.name}>
-              <img src={f.img} alt={f.name} />
+              <img src={f.img} alt={f.name} loading="lazy" />
               {f.note && <p className="cone-mnote">{f.note}</p>}
             </div>
           ))}
@@ -433,7 +433,7 @@ function MeetTheCone() {
             </div>
             <div className="cone-feature">
               <div className="cone-stage" key={active}>
-                <img className="cone-img" src={cone.img} alt={cone.name} />
+                <img className="cone-img" src={cone.img} alt={cone.name} loading="lazy" />
               </div>
             </div>
           </div>
@@ -495,8 +495,8 @@ const ClassicIntro = () => (
 const FlavorCard = ({ c }) => (
   <div>
     <div className="flavor-card">
-      <img className="cone-base" src={c.img} alt={c.name} />
-      <img className="cone-hover" src={c.hover} alt="" aria-hidden />
+      <img className="cone-base" src={c.img} alt={c.name} loading="lazy" />
+      <img className="cone-hover" src={c.hover} alt="" aria-hidden loading="lazy" />
     </div>
     <div className="flavor-meta">
       <div className="name">{c.name}</div>
@@ -625,7 +625,7 @@ function WhySkip() {
         <div className="why-cards">
           {WHY_CARDS.map((c) => (
             <div className="why-card" key={c.title}>
-              <img src={c.img} alt={c.title} />
+              <img src={c.img} alt={c.title} loading="lazy" />
               <div className="why-caption">
                 <h3>{c.title}</h3>
                 <p>{c.text}</p>
@@ -730,9 +730,9 @@ function Locations() {
                 onClick={() => setOpen(i)}
               >
                 {l.placeholder ? (
-                  <div className="loc-ph"><img src="/assets/logo-emblema.png" alt="" /></div>
+                  <div className="loc-ph"><img src="/assets/logo-emblema.png" alt="" loading="lazy" /></div>
                 ) : (
-                  <img src={l.img} alt={l.name} />
+                  <img src={l.img} alt={l.name} loading="lazy" />
                 )}
                 <div className="loc-bar">
                   <div className="loc-bar-head">
@@ -829,7 +829,7 @@ function Gallery() {
                 }}
                 onClick={() => setActive(i)}
               >
-                <img src={src} alt="" />
+                <img src={src} alt="" loading="lazy" />
               </figure>
             )
           })}
@@ -973,7 +973,7 @@ function Footer() {
   return (
     <footer className="footer" id="franchise">
       <div className="container footer-top">
-        <img className="footer-emblem" src="/assets/logo-emblema.png" alt="Chimney Cake Shop" />
+        <img className="footer-emblem" src="/assets/logo-emblema.png" alt="Chimney Cake Shop" loading="lazy" />
         <div className="footer-col">
           <h5>Restaurants</h5>
           {FOOTER_RESTAURANTS.map((r) => <p key={r}>{r}</p>)}
