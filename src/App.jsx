@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom'
 
 /* ---------------- Hooks ---------------- */
 function useIsMobile(bp = 640) {
@@ -195,16 +196,16 @@ function Header() {
   return (
     <header className={`header${scrolled ? ' scrolled' : ''}`}>
       <div className="container">
-        <a className="logo" href="#top" aria-label="Chimney Cake Shop">
+        <Link className="logo" to="/" aria-label="Chimney Cake Shop">
           <img className="logo-emblem" src="/assets/logo-emblema.png" alt="Chimney Cake Shop" />
-        </a>
+        </Link>
         <nav className="nav">
           <div className="nav-links">
-            <a href="#products">Products</a>
-            <a href="#story">Our Story</a>
-            <a href="#franchise">Franchise</a>
+            <a href="/#products">Products</a>
+            <a href="/#story">Our Story</a>
+            <Link to="/franchise">Franchise</Link>
           </div>
-          <a className="btn-3d sm" href="#locations">Locations</a>
+          <a className="btn-3d sm" href="/#locations">Locations</a>
         </nav>
       </div>
     </header>
@@ -628,19 +629,24 @@ function WhySkip() {
 
 /* ---------------- Locations ---------------- */
 function Locations() {
-  const [open, setOpen] = useState(2)
+  const [open, setOpen] = useState(-1)
   const cardsRef = useRef(null)
   const fillRef = useRef(null)
+  const rafRef = useRef(0)
 
   const updateProgress = () => {
-    const el = cardsRef.current
-    const fill = fillRef.current
-    if (!el || !fill) return
-    const frac = Math.min(1, el.clientWidth / el.scrollWidth)
-    const max = el.scrollWidth - el.clientWidth
-    const p = max > 0 ? el.scrollLeft / max : 0
-    fill.style.width = `${frac * 100}%`
-    fill.style.transform = `translateX(${(p * (1 - frac)) / (frac || 1) * 100}%)`
+    if (rafRef.current) return
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = 0
+      const el = cardsRef.current
+      const fill = fillRef.current
+      if (!el || !fill) return
+      const frac = Math.min(1, el.clientWidth / el.scrollWidth)
+      const max = el.scrollWidth - el.clientWidth
+      const p = max > 0 ? el.scrollLeft / max : 0
+      fill.style.width = `${frac * 100}%`
+      fill.style.transform = `translateX(${(p * (1 - frac)) / (frac || 1) * 100}%)`
+    })
   }
 
   useEffect(() => {
@@ -650,6 +656,8 @@ function Locations() {
   }, [])
 
   const onPointerDown = (e) => {
+    // Touch/pen use smooth native momentum scrolling; only mouse needs drag-to-scroll.
+    if (e.pointerType && e.pointerType !== 'mouse') return
     const el = cardsRef.current
     if (!el) return
     const startX = e.clientX
@@ -964,10 +972,108 @@ function Faq() {
   )
 }
 
+/* ---------------- Franchise ---------------- */
+const COUNTRIES = [
+  'Afghanistan','Albania','Algeria','Andorra','Angola','Antigua and Barbuda','Argentina','Armenia','Australia','Austria','Azerbaijan','Bahamas','Bahrain','Bangladesh','Barbados','Belarus','Belgium','Belize','Benin','Bhutan','Bolivia','Bosnia and Herzegovina','Botswana','Brazil','Brunei','Bulgaria','Burkina Faso','Burundi','Cabo Verde','Cambodia','Cameroon','Canada','Central African Republic','Chad','Chile','China','Colombia','Comoros','Congo','Costa Rica','Croatia','Cuba','Cyprus','Czech Republic','Denmark','Djibouti','Dominica','Dominican Republic','Ecuador','Egypt','El Salvador','Equatorial Guinea','Eritrea','Estonia','Eswatini','Ethiopia','Fiji','Finland','France','Gabon','Gambia','Georgia','Germany','Ghana','Greece','Grenada','Guatemala','Guinea','Guinea-Bissau','Guyana','Haiti','Honduras','Hungary','Iceland','India','Indonesia','Iran','Iraq','Ireland','Israel','Italy','Jamaica','Japan','Jordan','Kazakhstan','Kenya','Kiribati','Kuwait','Kyrgyzstan','Laos','Latvia','Lebanon','Lesotho','Liberia','Libya','Liechtenstein','Lithuania','Luxembourg','Madagascar','Malawi','Malaysia','Maldives','Mali','Malta','Marshall Islands','Mauritania','Mauritius','Mexico','Micronesia','Moldova','Monaco','Mongolia','Montenegro','Morocco','Mozambique','Myanmar','Namibia','Nauru','Nepal','Netherlands','New Zealand','Nicaragua','Niger','Nigeria','North Korea','North Macedonia','Norway','Oman','Pakistan','Palau','Palestine','Panama','Papua New Guinea','Paraguay','Peru','Philippines','Poland','Portugal','Qatar','Romania','Russia','Rwanda','Saint Kitts and Nevis','Saint Lucia','Saint Vincent and the Grenadines','Samoa','San Marino','Sao Tome and Principe','Saudi Arabia','Senegal','Serbia','Seychelles','Sierra Leone','Singapore','Slovakia','Slovenia','Solomon Islands','Somalia','South Africa','South Korea','South Sudan','Spain','Sri Lanka','Sudan','Suriname','Sweden','Switzerland','Syria','Taiwan','Tajikistan','Tanzania','Thailand','Timor-Leste','Togo','Tonga','Trinidad and Tobago','Tunisia','Turkey','Turkmenistan','Tuvalu','Uganda','Ukraine','United Arab Emirates','United Kingdom','United States','Uruguay','Uzbekistan','Vanuatu','Vatican City','Venezuela','Vietnam','Yemen','Zambia','Zimbabwe',
+]
+
+function Franchise() {
+  const [submitted, setSubmitted] = useState(false)
+  return (
+    <section className="section franchise" id="franchise">
+      <div className="container franchise-inner">
+        <h2 className="section-title center">
+          Become a <span className="accent">franchise</span> partner
+        </h2>
+        <p className="section-sub center">
+          Fill out the form to join us in revolutionizing the dessert market with
+          Chimney Cake Shop.
+        </p>
+
+        {submitted ? (
+          <div className="form-success" role="status">
+            <h3>Thank you!</h3>
+            <p>
+              We’ve received your enquiry and our franchise team will get back to
+              you shortly.
+            </p>
+          </div>
+        ) : (
+          <form className="franchise-form" onSubmit={(e) => { e.preventDefault(); setSubmitted(true) }}>
+            <div className="field">
+              <label htmlFor="fr-name">Name</label>
+              <input id="fr-name" name="name" type="text" placeholder="Your full name" required />
+            </div>
+            <div className="field">
+              <label htmlFor="fr-email">E-mail</label>
+              <input id="fr-email" name="email" type="email" placeholder="you@email.com" required />
+            </div>
+            <div className="field">
+              <label htmlFor="fr-phone">Phone</label>
+              <input id="fr-phone" name="phone" type="tel" placeholder="+36 ..." required />
+            </div>
+
+            <div className="field">
+              <span className="field-label">Will you have financial partners?</span>
+              <div className="choice">
+                <label><input type="radio" name="partners" value="yes" required /> Yes</label>
+                <label><input type="radio" name="partners" value="no" /> No</label>
+              </div>
+            </div>
+
+            <div className="field">
+              <label htmlFor="fr-cash">
+                How much readily available cash do you have to invest?
+              </label>
+              <select id="fr-cash" name="cash" defaultValue="" required>
+                <option value="" disabled>Select an option</option>
+                <option>50,000 – 100,000 Euros</option>
+                <option>100,000 – 150,000 Euros</option>
+                <option>More than 150,000 Euros</option>
+              </select>
+            </div>
+
+            <div className="field">
+              <span className="field-label">Have you ever started your own business?</span>
+              <div className="choice">
+                <label><input type="radio" name="business" value="yes" required /> Yes</label>
+                <label><input type="radio" name="business" value="no" /> No</label>
+              </div>
+            </div>
+
+            <div className="field-row">
+              <div className="field">
+                <label htmlFor="fr-country">Area of interest — Country</label>
+                <select id="fr-country" name="country" defaultValue="" required>
+                  <option value="" disabled>Select a country</option>
+                  {COUNTRIES.map((c) => <option key={c}>{c}</option>)}
+                </select>
+              </div>
+              <div className="field">
+                <label htmlFor="fr-city">City</label>
+                <input id="fr-city" name="city" type="text" placeholder="City" required />
+              </div>
+            </div>
+
+            <label className="agree">
+              <input type="checkbox" required />
+              <span>
+                I agree to the Terms and Conditions and Privacy Policy.
+              </span>
+            </label>
+
+            <button type="submit" className="btn-3d">Send</button>
+          </form>
+        )}
+      </div>
+    </section>
+  )
+}
+
 /* ---------------- Footer ---------------- */
 function Footer() {
   return (
-    <footer className="footer" id="franchise">
+    <footer className="footer">
       <div className="container footer-top">
         <img className="footer-emblem" src="/assets/logo-emblema.png" alt="Chimney Cake Shop" loading="lazy" />
         <div className="footer-col">
@@ -985,10 +1091,10 @@ function Footer() {
         </div>
         <div className="footer-col">
           <h5>Sitemap</h5>
-          <a href="#products">Products</a>
-          <a href="#story">Our Story</a>
-          <a href="#franchise">Franchise</a>
-          <a href="#locations">Locations</a>
+          <a href="/#products">Products</a>
+          <a href="/#story">Our Story</a>
+          <Link to="/franchise">Franchise</Link>
+          <a href="/#locations">Locations</a>
         </div>
         <div className="footer-col">
           <h5>Contact</h5>
@@ -1050,23 +1156,52 @@ function Footer() {
   )
 }
 
+/* ---------------- Pages ---------------- */
+function Home() {
+  return (
+    <>
+      <Hero />
+      <WhatIs />
+      <MeetTheCone />
+      <ClassicExperience />
+      <WhySkip />
+      <Locations />
+      <Gallery />
+      <Reviews />
+      <Faq />
+    </>
+  )
+}
+
+// Scroll to top on route change, but honour in-page #hash links.
+function ScrollToTop() {
+  const { pathname, hash } = useLocation()
+  useEffect(() => {
+    if (hash) {
+      const el = document.getElementById(hash.slice(1))
+      if (el) {
+        el.scrollIntoView()
+        return
+      }
+    }
+    window.scrollTo(0, 0)
+  }, [pathname, hash])
+  return null
+}
+
 /* ---------------- App ---------------- */
 export default function App() {
   return (
-    <>
+    <BrowserRouter>
+      <ScrollToTop />
       <Header />
       <main>
-        <Hero />
-        <WhatIs />
-        <MeetTheCone />
-        <ClassicExperience />
-        <WhySkip />
-        <Locations />
-        <Gallery />
-        <Reviews />
-        <Faq />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/franchise" element={<Franchise />} />
+        </Routes>
       </main>
       <Footer />
-    </>
+    </BrowserRouter>
   )
 }

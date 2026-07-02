@@ -947,7 +947,8 @@ button {
   scroll-snap-type: x proximity;
   scrollbar-width: none;
   cursor: grab;
-  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
 }
 
 .loc-cards::-webkit-scrollbar {
@@ -1532,6 +1533,141 @@ button {
   fill: currentColor;
 }
 
+/* ---------- Franchise form ---------- */
+.franchise-inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.franchise-form {
+  margin-top: 44px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field label,
+.field-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.field input[type='text'],
+.field input[type='email'],
+.field input[type='tel'],
+.field select {
+  height: 52px;
+  padding: 0 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card);
+  color: #fff;
+  font-family: inherit;
+  font-size: 15px;
+  transition: border-color 0.2s ease;
+}
+
+.field select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23dacbcb' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+.field input::placeholder {
+  color: var(--muted);
+}
+
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: var(--text);
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+
+.choice {
+  display: flex;
+  gap: 28px;
+  padding-top: 4px;
+}
+
+.choice label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.franchise-form input[type='radio'],
+.franchise-form input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--muted);
+  cursor: pointer;
+}
+
+.agree {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.agree input {
+  margin-top: 2px;
+  flex: none;
+}
+
+.franchise-form .btn-3d {
+  align-self: flex-start;
+  margin-top: 6px;
+  min-width: 160px;
+}
+
+.form-success {
+  margin-top: 44px;
+  text-align: center;
+  border: 1px solid var(--border-soft);
+  background: var(--soft-fill);
+  border-radius: 16px;
+  padding: 48px 32px;
+}
+
+.form-success h3 {
+  font-weight: 700;
+  font-size: 30px;
+  color: #fff;
+  margin: 0 0 10px;
+}
+
+.form-success p {
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--text);
+  max-width: 420px;
+  margin: 0 auto;
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 1100px) {
   .section-title {
@@ -1804,6 +1940,11 @@ button {
   /* reviews */
   .reviews-head {
     font-size: 24px;
+  }
+
+  /* franchise form */
+  .field-row {
+    grid-template-columns: 1fr;
   }
 
   /* footer */
