@@ -1108,6 +1108,11 @@ function Footer() {
           <div className="footer-copy">
             <p>© 2026 – Chimney Cake Shop – Minden jog fenntartva</p>
             <p>A weboldalt a Chimney Cake megbízásából a Peppersgroup készítette.</p>
+            <div className="footer-legal">
+              <Link to="/terms">Terms and Conditions</Link>
+              <span aria-hidden>·</span>
+              <Link to="/privacy">Privacy Policy</Link>
+            </div>
           </div>
           <div className="footer-right">
             <a className="footer-email" href="mailto:chimneycakeshop.hu@gmail.com">chimneycakeshop.hu@gmail.com</a>
@@ -1156,6 +1161,113 @@ function Footer() {
   )
 }
 
+/* ---------------- Legal pages ---------------- */
+function Terms() {
+  return (
+    <section className="section legal">
+      <div className="container legal-inner">
+        <h1 className="legal-title">Terms and Conditions</h1>
+        <p className="legal-lead">
+          Welcome to The Chimney Cake Shop Franchise. These Terms and Conditions
+          outline the rules and regulations for the use of our website and
+          services. By accessing this website, you accept these terms in full. If
+          you disagree with any part of these terms, you must not use our website.
+        </p>
+
+        <h2>1. Intellectual Property Rights</h2>
+        <p>
+          All content, trademarks, and other intellectual property on this
+          website are the property of The Chimney Cake Shop or its licensors. You
+          may not reproduce, distribute, or create derivative works from any
+          content without our express written permission.
+        </p>
+
+        <h2>2. User Responsibilities</h2>
+        <p>
+          As a user of our website, you agree to use it only for lawful purposes
+          and in a manner that does not infringe the rights of, restrict, or
+          inhibit anyone else’s use and enjoyment of the website.
+        </p>
+
+        <h2>3. Limitation of Liability</h2>
+        <p>
+          The Chimney Cake Shop shall not be liable for any direct, indirect,
+          incidental, or consequential damages arising from the use of or
+          inability to use this website or any services provided through it.
+        </p>
+
+        <h2>4. Changes to Terms</h2>
+        <p>
+          We reserve the right to modify these Terms and Conditions at any time.
+          Any changes will be effective immediately upon posting on this page.
+          Your continued use of the website after any changes constitutes your
+          acceptance of the new terms.
+        </p>
+
+        <h2>5. Governing Law</h2>
+        <p>
+          These terms shall be governed by and construed in accordance with the
+          laws of the jurisdiction in which The Chimney Cake Shop operates.
+        </p>
+      </div>
+    </section>
+  )
+}
+
+function Privacy() {
+  return (
+    <section className="section legal">
+      <div className="container legal-inner">
+        <h1 className="legal-title">Privacy Policy</h1>
+        <p className="legal-lead">
+          Your privacy is important to us. This Privacy Policy outlines how The
+          Chimney Cake Shop collects, uses, and protects your information when you
+          visit our website or engage with our services.
+        </p>
+
+        <h2>1. Information We Collect</h2>
+        <p>
+          We may collect personal information such as your name, email address,
+          and contact details when you fill out forms on our website. We also
+          collect non-personal information through cookies and analytics tools to
+          improve our services.
+        </p>
+
+        <h2>2. How We Use Your Information</h2>
+        <p>Your information may be used to:</p>
+        <ul className="legal-list">
+          <li>Provide and manage our services</li>
+          <li>Communicate with you regarding your inquiries</li>
+          <li>Send promotional materials and updates</li>
+          <li>Improve our website and services</li>
+        </ul>
+
+        <h2>3. Data Protection</h2>
+        <p>
+          We implement appropriate security measures to protect your personal
+          information from unauthorized access, alteration, disclosure, or
+          destruction. However, no method of transmission over the internet or
+          method of electronic storage is 100% secure.
+        </p>
+
+        <h2>4. Sharing Your Information</h2>
+        <p>
+          We do not sell, trade, or otherwise transfer your personal information
+          to outside parties without your consent, except as required by law.
+        </p>
+
+        <h2>5. Changes to This Policy</h2>
+        <p>
+          We may update this Privacy Policy from time to time. We will notify you
+          of any changes by posting the new policy on this page. Your continued
+          use of the website after any changes constitutes your acceptance of the
+          new policy.
+        </p>
+      </div>
+    </section>
+  )
+}
+
 /* ---------------- Pages ---------------- */
 function Home() {
   return (
@@ -1199,6 +1311,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/franchise" element={<Franchise />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
         </Routes>
       </main>
       <Footer />
