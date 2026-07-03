@@ -1539,6 +1539,20 @@ button {
   margin: 0 auto;
 }
 
+.franchise-intro {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.franchise-intro p {
+  font-size: 16px;
+  line-height: 26px;
+  color: var(--text);
+  margin: 0;
+}
+
 .franchise-form {
   margin-top: 44px;
   display: flex;

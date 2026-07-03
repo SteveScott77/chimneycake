@@ -990,6 +990,45 @@ function Franchise() {
           Chimney Cake Shop.
         </p>
 
+        <div className="franchise-intro">
+          <p>
+            Join us in bringing the time-honored flavors of Hungary to the world.
+            Our chimney cakes offer a unique culinary experience, blending
+            tradition with modern tastes. Explore our franchise opportunities and
+            be part of a delicious journey.
+          </p>
+          <p>
+            Chimney Cake Shop (CCS) is a global franchise brand centered around
+            the Hungarian kürtőskalács, a traditional chimney-shaped pastry
+            recognized as a Hungarikum. CCS reimagines this heritage dessert with
+            modern variations, such as ice cream-filled cones, Nutella spreads,
+            and global toppings (e.g., Oreo, Snickers), making it a photogenic,
+            Instagram-friendly product with year-round appeal. The brand’s
+            philosophy, “The Future of Tradition,” combines authenticity with
+            innovation, targeting high-traffic locations like tourist zones,
+            shopping malls, and urban streets.
+          </p>
+          <p>
+            CCS has established a presence in Hungary and is expanding globally,
+            where its unique dessert offering is poised to attract a diverse
+            customer base, from trend-savvy youth to families seeking nostalgic
+            treats. The franchise model is turnkey, providing franchisees with
+            equipment, training, and proprietary know-how to ensure consistent
+            quality and profitability.
+          </p>
+          <p>
+            Chimney Cake Shop is more than just a dessert business – it is a
+            modern, scalable franchise concept built around a traditional product
+            with strong consumer appeal. Our model is simple, transparent, and
+            designed for long-term success.
+          </p>
+          <p>
+            We believe in partnerships, not just transactions: when our partners
+            thrive, the brand grows stronger. That is why we have built every
+            aspect of our franchise system to support your success.
+          </p>
+        </div>
+
         {submitted ? (
           <div className="form-success" role="status">
             <h3>Thank you!</h3>
