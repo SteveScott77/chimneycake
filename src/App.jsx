@@ -73,8 +73,8 @@ const FLAVOR_CARDS = [
 const WHY_CARDS = [
   {
     img: '/assets/why-3.jpg',
-    title: 'Freshly baked & warm',
-    text: 'Crispy, soft and best enjoyed straight from the oven.',
+    title: 'Handmade & freshly baked',
+    text: 'Made by hand, baked fresh and rolled in your favourite coating — warm, soft inside and delicious from the first bite.',
   },
   {
     img: '/assets/why-1.jpg',
@@ -90,15 +90,16 @@ const WHY_CARDS = [
 
 const LOC_HOURS = 'Sunday – Thursday: 11:00 – 22:00\nFriday – Saturday: 11:00 – 23:00'
 const LOCATIONS = [
-  { name: 'Váci utca', img: '/assets/loc-vaci.png', addr: '1052 Budapest, Váci u. 11/B.', hours: LOC_HOURS, cid: '13599539892897907328', mapUrl: 'https://www.google.com/maps?cid=13599539892897907328' },
+  { name: 'Váci utca 11/B.', img: '/assets/loc-vaci-11.png', addr: '1052 Budapest, Váci u. 11/B.', hours: LOC_HOURS, cid: '13599539892897907328', mapUrl: 'https://www.google.com/maps?cid=13599539892897907328' },
+  { name: 'Váci utca 23.', img: '/assets/loc-vaci-23.png', addr: '1052 Budapest, Váci u. 23.', hours: LOC_HOURS, query: 'Chimney Cake Shop, Váci u. 23, Budapest', mapUrl: 'https://share.google/VGsKJv7uaZEDIXWHU' },
+  { name: 'Zrínyi utca', img: '/assets/loc-zrinyi.jpg', addr: '1051 Budapest, Zrínyi u. 14.', hours: LOC_HOURS, cid: '145345763919310174', mapUrl: 'https://www.google.com/maps/place/CHIMNEY+CAKE+SHOP/@47.5005332,19.0506973,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dd003e48829f:0x2045f33c404ad5e!8m2!3d47.5005332!4d19.0506973!16s%2Fg%2F11z2mdtyzn' },
   { name: 'Fashion street', img: '/assets/loc-fashion.png', addr: '1051 Budapest, Deák Ferenc u. 10.', hours: LOC_HOURS, cid: '16718429277565892994', mapUrl: 'https://www.google.com/maps?cid=16718429277565892994' },
-  { name: 'Akvárium', img: '/assets/loc-akvarium.png', addr: '1051 Budapest, Erzsébet tér 12.', hours: LOC_HOURS, cid: '18311191613973595767', mapUrl: 'https://www.google.com/maps?cid=18311191613973595767' },
   { name: 'Deák tér', img: '/assets/loc-deak.png', addr: '1052 Budapest, Deák Ferenc tér 3.', hours: LOC_HOURS, cid: '15644560448914780515', mapUrl: 'https://www.google.com/maps?cid=15644560448914780515' },
+  { name: 'Sas utca', placeholder: true, addr: '1051 Budapest, Sas u. 10.', hours: LOC_HOURS, cid: '11826260180090323375', mapUrl: 'https://www.google.com/maps?cid=11826260180090323375' },
+  { name: 'Kígyó utca', placeholder: true, addr: '1052 Budapest, Kígyó u. 2.', hours: LOC_HOURS, cid: '3128396529710505300', mapUrl: 'https://www.google.com/maps/place/Budapest,+K%C3%ADgy%C3%B3+u.+2,+1052/@47.4930185,19.0533128,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc46b0a09dbd:0x2b6a4c119df59d54!8m2!3d47.4930185!4d19.0533128!16s%2Fg%2F11w83vp_xv' },
+  { name: 'Akvárium', img: '/assets/loc-akvarium.png', addr: '1051 Budapest, Erzsébet tér 12.', hours: LOC_HOURS, cid: '18311191613973595767', mapUrl: 'https://www.google.com/maps?cid=18311191613973595767' },
   { name: 'Madách tér', img: '/assets/loc-madach.png', addr: '1075 Budapest, Károly krt. 13-15.', hours: LOC_HOURS, cid: '16663013220313701957', mapUrl: 'https://www.google.com/maps?cid=16663013220313701957' },
   { name: 'Bazilika', img: '/assets/loc-bazilika.jpg', addr: '1051 Budapest, Szent István tér 2.', hours: LOC_HOURS, cid: '11089372304823282514', mapUrl: 'https://www.google.com/maps?cid=11089372304823282514' },
-  { name: 'Zrínyi utca', img: '/assets/loc-zrinyi.jpg', addr: '1051 Budapest, Zrínyi u. 14.', hours: LOC_HOURS, cid: '145345763919310174', mapUrl: 'https://www.google.com/maps/place/CHIMNEY+CAKE+SHOP/@47.5005332,19.0506973,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dd003e48829f:0x2045f33c404ad5e!8m2!3d47.5005332!4d19.0506973!16s%2Fg%2F11z2mdtyzn' },
-  { name: 'Kígyó utca', placeholder: true, addr: '1052 Budapest, Kígyó u. 2.', hours: LOC_HOURS, cid: '3128396529710505300', mapUrl: 'https://www.google.com/maps/place/Budapest,+K%C3%ADgy%C3%B3+u.+2,+1052/@47.4930185,19.0533128,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc46b0a09dbd:0x2b6a4c119df59d54!8m2!3d47.4930185!4d19.0533128!16s%2Fg%2F11w83vp_xv' },
-  { name: 'Sas utca', placeholder: true, addr: '1051 Budapest, Sas u. 10.', hours: LOC_HOURS, cid: '11826260180090323375', mapUrl: 'https://www.google.com/maps?cid=11826260180090323375' },
 ]
 
 const REVIEWS = [
@@ -187,16 +188,18 @@ function ArrowRight() {
 /* ---------------- Header ---------------- */
 function Header() {
   const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+  const closeMenu = () => setMenuOpen(false)
   return (
-    <header className={`header${scrolled ? ' scrolled' : ''}`}>
+    <header className={`header${scrolled ? ' scrolled' : ''}${menuOpen ? ' menu-open' : ''}`}>
       <div className="container">
-        <Link className="logo" to="/" aria-label="Chimney Cake Shop">
+        <Link className="logo" to="/" aria-label="Chimney Cake Shop" onClick={closeMenu}>
           <img className="logo-emblem" src="/assets/logo-emblema.png" alt="Chimney Cake Shop" />
         </Link>
         <nav className="nav">
@@ -206,7 +209,24 @@ function Header() {
             <Link to="/franchise">Franchise</Link>
           </div>
           <a className="btn-3d sm" href="/#locations">Locations</a>
+          <button
+            className="nav-toggle"
+            aria-label="Menu"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
         </nav>
+      </div>
+      <div className={`mobile-menu${menuOpen ? ' open' : ''}`}>
+        <div className="mobile-menu-inner">
+          <a href="/#products" onClick={closeMenu}>Products</a>
+          <a href="/#story" onClick={closeMenu}>Our Story</a>
+          <Link to="/franchise" onClick={closeMenu}>Franchise</Link>
+        </div>
       </div>
     </header>
   )
@@ -235,6 +255,15 @@ function Hero() {
         <div className="hero-features">
           <div className="feature">
             <span className="icon">
+              <svg width="36" height="19" viewBox="0 0 36 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.36719 11.2294L8.37584 4.58961C8.86768 4.1613 10.5153 3.30469 13.1712 3.30469C15.8272 3.30469 18.4585 3.30469 19.4421 3.30469C20.3029 3.4872 22.0243 4.29489 22.0243 6.0655C22.0243 7.83611 20.3029 8.52468 19.4421 8.64764H13.909" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M22 6.63306L27 2.13498C28.3098 0.760031 31.9856 0.164924 34.9367 3.11626L24.2392 13.8132C23.5015 14.428 21.6571 15.6576 20.1816 15.6576C18.7061 15.6576 14.074 15.6577 11 15.6577C11 15.6577 9.5 15.6331 6.53315 17.1331L1 11.6L1.36888 11.2311" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+            </span>
+            Handmade
+          </div>
+          <div className="feature">
+            <span className="icon">
               <svg viewBox="0 0 21 21" fill="none" aria-hidden>
                 <path d="M4.31128 20C2.20301 18.4519 -1.03071 15.1462 2.73008 11.1333C8.07201 5.43333 2.73004 1 2.73004 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                 <path d="M11.7605 20C9.65223 18.4519 6.41851 15.1462 10.1793 11.1333C15.5212 5.43333 10.1793 1 10.1793 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -252,15 +281,6 @@ function Hero() {
               </svg>
             </span>
             City centre locations
-          </div>
-          <div className="feature">
-            <span className="icon">
-              <svg viewBox="0 0 25 18" fill="none" aria-hidden>
-                <rect x="1" y="1" width="23" height="16" rx="1" stroke="currentColor" strokeWidth="2" />
-                <rect y="5.14453" width="25" height="2.57143" fill="currentColor" />
-              </svg>
-            </span>
-            Card payment accepted
           </div>
         </div>
       </div>
@@ -693,9 +713,13 @@ function Locations() {
   const mapSrc =
     selected && selected.cid
       ? `https://www.google.com/maps?cid=${selected.cid}&output=embed`
-      : `https://www.google.com/maps?q=${encodeURIComponent(
-          'Chimney Cake Shop, Budapest',
-        )}&z=13&output=embed`
+      : selected && selected.query
+        ? `https://www.google.com/maps?q=${encodeURIComponent(
+            selected.query,
+          )}&z=17&output=embed`
+        : `https://www.google.com/maps?q=${encodeURIComponent(
+            'Chimney Cake Shop, Budapest',
+          )}&z=13&output=embed`
   const mapTitle = selected
     ? `${selected.name} — ${selected.addr}`
     : 'Chimney Cake Shop locations in Budapest'
@@ -722,7 +746,7 @@ function Locations() {
             return (
               <div
                 className={`loc-card${isOpen ? ' open' : ''}${l.placeholder ? ' placeholder' : ''}`}
-                key={l.name}
+                key={i}
                 onClick={() => setOpen(i)}
               >
                 {l.placeholder ? (
@@ -779,13 +803,10 @@ function Locations() {
 
 /* ---------------- Gallery ---------------- */
 // Original design order (left → right), with the featured cone centered
-const GALLERY = [
-  '/assets/gallery-2.jpg',
-  '/assets/gallery-3.jpg',
-  '/assets/gallery-5.jpg',
-  '/assets/gallery-4.jpg',
-  '/assets/gallery-1.jpg',
-]
+const GALLERY = Array.from(
+  { length: 23 },
+  (_, i) => `/assets/gallery/gallery-${String(i + 1).padStart(2, '0')}.jpg`,
+)
 
 function Gallery() {
   const [active, setActive] = useState(2)
@@ -1116,15 +1137,15 @@ function Footer() {
       <div className="container footer-top">
         <img className="footer-emblem" src="/assets/logo-emblema.png" alt="Chimney Cake Shop" loading="lazy" />
         <div className="footer-col">
-          <h5>Restaurants</h5>
-          {LOCATIONS.map((l) => (
+          <h5>Shops</h5>
+          {LOCATIONS.map((l, i) => (
             <a
-              key={l.name}
+              key={i}
               href={l.mapUrl}
               target="_blank"
               rel="noopener noreferrer"
             >
-              {l.name.toUpperCase()}: {l.addr}
+              {l.name.toUpperCase()}, {l.addr}
             </a>
           ))}
         </div>
@@ -1341,6 +1362,80 @@ function ScrollToTop() {
 }
 
 /* ---------------- App ---------------- */
+/* ---------------- Social marquee ---------------- */
+const SOCIALS = [
+  {
+    label: 'Facebook',
+    href: 'https://www.facebook.com/chimneycakeshop.hu',
+    svg: (
+      <svg viewBox="0 0 14.0008 27.001" fill="none" aria-hidden>
+        <path d="M13.9929 11.9082L13.6571 14.6538C13.6003 15.1125 13.2188 15.4575 12.7663 15.4575H8.39858V26.937C7.93797 26.9793 7.47127 27.001 6.99949 27.001C5.94434 27.001 4.91456 26.8936 3.91927 26.6891V15.4575H0.560041C0.251612 15.4575 0 15.2003 0 14.8852V11.4495C0 11.1345 0.251612 10.8773 0.560041 10.8773H3.91927V5.72477C3.91927 2.56282 6.42626 0 9.51967 0H13.4389C13.7474 0 13.999 0.257212 13.999 0.57227V4.00796C13.999 4.32302 13.7474 4.58023 13.4389 4.58023H10.6387C9.40199 4.58023 8.39959 5.60494 8.39959 6.87034V10.8783H13.1031C13.6429 10.8783 14.0599 11.3617 13.9939 11.9092L13.9929 11.9082Z" fill="currentColor" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Instagram',
+    href: 'https://www.instagram.com/chimneycakeshop.hu',
+    svg: (
+      <svg viewBox="0 0 23 23" fill="none" aria-hidden>
+        <path d="M17.4484 0H5.55165C2.48616 0 0 2.48616 0 5.55165V17.4484C0 20.5138 2.48616 23 5.55165 23H17.4484C20.5138 23 23 20.5138 23 17.4484V5.55165C23 2.48616 20.5138 0 17.4484 0ZM21.017 17.0511C21.017 19.2404 19.2404 21.017 17.0511 21.017H5.9478C3.75848 21.017 1.98186 19.2404 1.98186 17.0511V5.9478C1.98186 3.75848 3.75848 1.98186 5.9478 1.98186H17.0511C19.2404 1.98186 21.017 3.75848 21.017 5.9478V17.0511Z" fill="currentColor" />
+        <g transform="translate(5.56 5.55)">
+          <path d="M5.9478 0C2.66492 0 0 2.66492 0 5.9478C0 9.23068 2.66492 11.8956 5.9478 11.8956C9.23068 11.8956 11.8956 9.23068 11.8956 5.9478C11.8956 2.66492 9.23068 0 5.9478 0ZM5.9478 9.91374C3.76289 9.91374 1.98186 8.13271 1.98186 5.9478C1.98186 3.76289 3.76289 1.98186 5.9478 1.98186C8.13271 1.98186 9.91374 3.76289 9.91374 5.9478C9.91374 8.13271 8.13271 9.91374 5.9478 9.91374Z" fill="currentColor" />
+        </g>
+        <g transform="translate(16.67 3.97)">
+          <path d="M1.18956 2.37912C0.534088 2.37912 0 1.84503 0 1.18956C0 0.534088 0.534088 0 1.18956 0C1.84503 0 2.37912 0.534088 2.37912 1.18956C2.37912 1.84503 1.84503 2.37912 1.18956 2.37912Z" fill="currentColor" />
+        </g>
+      </svg>
+    ),
+  },
+  {
+    label: 'TripAdvisor',
+    href: 'https://www.tripadvisor.com/Restaurant_Review-g274887-d19828598-Reviews-Chimney_Cake_Shop-Budapest_Central_Hungary.html',
+    svg: (
+      <svg viewBox="0 0 34 22" fill="none" aria-hidden>
+        <path d="M31.2211 6.40737L34 3.36014H27.8373C24.7523 1.23672 21.0271 0 16.9977 0C12.9684 0 9.258 1.23932 6.17824 3.36079H0L2.77895 6.40802C1.07543 7.97392 0.0077462 10.2301 0.0077462 12.7347C0.0077462 17.4623 3.81048 21.2948 8.50145 21.2948C10.7298 21.2948 12.7599 20.4289 14.2756 19.0126L16.9977 22L19.7199 19.0152C21.2356 20.4308 23.2631 21.2948 25.4914 21.2948C30.1824 21.2948 33.9903 17.4623 33.9903 12.7347C33.9929 10.2268 32.9252 7.97132 31.2217 6.40737H31.2211ZM8.50403 18.528C5.32874 18.528 2.75571 15.9348 2.75571 12.7347C2.75571 9.53461 5.32874 6.94148 8.50403 6.94148C11.6793 6.94148 14.2524 9.53461 14.2524 12.7347C14.2524 15.9348 11.6793 18.528 8.50403 18.528ZM17.0003 12.5662C17.0003 8.75394 14.2498 5.48162 10.6194 4.08422C12.5824 3.25671 14.7365 2.79806 16.9977 2.79806C19.259 2.79806 21.4157 3.25671 23.3787 4.08422C19.7509 5.48422 17.0003 8.75459 17.0003 12.5662ZM25.494 18.528C22.3187 18.528 19.7457 15.9348 19.7457 12.7347C19.7457 9.53461 22.3187 6.94148 25.494 6.94148C28.6693 6.94148 31.2424 9.53461 31.2424 12.7347C31.2424 15.9348 28.6693 18.528 25.494 18.528ZM25.494 9.69595C23.8292 9.69595 22.4808 11.055 22.4808 12.7328C22.4808 14.4106 23.8292 15.7696 25.494 15.7696C27.1588 15.7696 28.5073 14.4106 28.5073 12.7328C28.5073 11.0576 27.1588 9.69595 25.494 9.69595ZM11.5167 12.7347C11.5167 14.4125 10.1682 15.7715 8.50339 15.7715C6.8386 15.7715 5.49012 14.4125 5.49012 12.7347C5.49012 11.0569 6.8386 9.6979 8.50339 9.6979C10.1682 9.6953 11.5167 11.0569 11.5167 12.7347Z" fill="currentColor" />
+      </svg>
+    ),
+  },
+]
+
+function MarqueeGroup({ hidden }) {
+  return (
+    <div className="marquee-group" aria-hidden={hidden || undefined}>
+      <span className="marquee-text">Follow us!</span>
+      {SOCIALS.map((s) => (
+        <a
+          key={s.label}
+          className="marquee-ic"
+          href={s.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={hidden ? undefined : s.label}
+          tabIndex={hidden ? -1 : undefined}
+        >
+          {s.svg}
+        </a>
+      ))}
+    </div>
+  )
+}
+
+function SocialMarquee() {
+  const groups = [0, 1, 2, 3]
+  return (
+    <div className="social-marquee">
+      <div className="marquee-track">
+        {groups.map((i) => (
+          <MarqueeGroup key={`a${i}`} />
+        ))}
+        {groups.map((i) => (
+          <MarqueeGroup key={`b${i}`} hidden />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -1354,6 +1449,7 @@ export default function App() {
           <Route path="/privacy" element={<Privacy />} />
         </Routes>
       </main>
+      <SocialMarquee />
       <Footer />
     </BrowserRouter>
   )
