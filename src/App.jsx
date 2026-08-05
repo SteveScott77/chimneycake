@@ -504,8 +504,7 @@ const ClassicIntro = () => (
 const FlavorCard = ({ c }) => (
   <div>
     <div className="flavor-card">
-      <img className="cone-base" src={c.img} alt={c.name} loading="lazy" />
-      <img className="cone-hover" src={c.hover} alt="" aria-hidden loading="lazy" />
+      <img className="cone-img" src={c.hover} alt={c.name} loading="lazy" />
     </div>
     <div className="flavor-meta">
       <div className="name">{c.name}</div>
@@ -595,16 +594,7 @@ function ClassicExperience() {
             <div className="classic-cards" ref={trackRef}>
               <div className="flavor-cards" ref={cardsRef}>
                 {FLAVOR_CARDS.map((c) => (
-                  <div key={c.name}>
-                    <div className="flavor-card">
-                      <img className="cone-base" src={c.img} alt={c.name} />
-                      <img className="cone-hover" src={c.hover} alt="" aria-hidden />
-                    </div>
-                    <div className="flavor-meta">
-                      <div className="name">{c.name}</div>
-                      <div className="hu">{c.hu}</div>
-                    </div>
-                  </div>
+                  <FlavorCard c={c} key={c.name} />
                 ))}
               </div>
             </div>

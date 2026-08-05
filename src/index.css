@@ -253,6 +253,17 @@ button {
   object-fit: cover;
 }
 
+/* On wide screens `cover` upscales the banner and the cakes get huge. Above the
+   width where the panel is wider than the image's aspect ratio, switch to
+   `contain` so the whole shot shows a bit smaller. Right-aligned so the empty
+   sliver falls on the left, hidden under the dark text gradient. */
+@media (min-width: 1400px) {
+  .hero-bg img {
+    object-fit: contain;
+    object-position: right center;
+  }
+}
+
 .hero-bg::after {
   content: '';
   position: absolute;
@@ -820,47 +831,17 @@ button {
 .flavor-card {
   position: relative;
   border-radius: 10px;
-  border: 1px solid transparent;
   height: 560px;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 8px;
-  transition: border-color 0.4s ease;
-}
-
-.flavor-card:hover {
-  border-color: #d9d9d9;
 }
 
 .flavor-card img {
   height: 100%;
   width: auto;
   object-fit: contain;
-}
-
-.flavor-card .cone-base {
-  position: relative;
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-.flavor-card .cone-hover {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%) scale(0.95);
-  opacity: 0;
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-.flavor-card:hover .cone-base {
-  opacity: 0;
-  transform: scale(1.04);
-}
-
-.flavor-card:hover .cone-hover {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
 }
 
 .flavor-meta {
