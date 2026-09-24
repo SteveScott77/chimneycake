@@ -230,111 +230,111 @@ button {
 /* ---------- Hero ---------- */
 .hero {
   position: relative;
-  min-height: 760px;
+  overflow-x: clip;
+  overflow-y: visible;
+  padding: 30px 0 26px;
+}
+
+.hero-inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-title {
+  font-weight: 700;
+  font-size: 60px;
+  line-height: 1.12;
+  color: #fff;
+  margin: 0;
+  max-width: 1000px;
+}
+
+.hero-title span {
+  color: var(--text);
+}
+
+.hero-sub {
+  margin-top: 14px;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--text);
+  max-width: 640px;
+}
+
+/* Rotating ring of cones (Figma "forog" = spins). A large disk: its top half
+   sits sharp in the hero, its bottom half overflows into the next section,
+   where that section's backdrop blur softens it (the "split in half" look). */
+.hero-disk {
+  position: absolute;
+  left: 50%;
+  top: 236px;
+  transform: translateX(-50%);
+  z-index: -1;
+  width: min(540px, 82vw);
+  aspect-ratio: 1100 / 1119;
   display: flex;
   align-items: center;
-  overflow: hidden;
+  justify-content: center;
+  pointer-events: none;
 }
 
-.hero-bg {
+.hero-disk-glow {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 48px;
-  z-index: 0;
-  border-radius: 0 24px 24px 0;
-  overflow: hidden;
-}
-
-.hero-bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* On wide screens `cover` upscales the banner and the cakes get huge. Above the
-   width where the panel is wider than the image's aspect ratio, switch to
-   `contain` so the whole shot shows a bit smaller. Right-aligned so the empty
-   sliver falls on the left, hidden under the dark text gradient. */
-@media (min-width: 1400px) {
-  .hero-bg img {
-    object-fit: contain;
-    object-position: right center;
-  }
-}
-
-.hero-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    var(--bg) 28%,
-    rgba(0, 0, 0, 0) 62%
+  width: 80%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(133, 121, 121, 0.32) 0%,
+    rgba(0, 0, 0, 0) 66%
   );
 }
 
-.hero .container {
+.hero-disk img {
   position: relative;
   z-index: 1;
-  max-width: 1300px;
-  margin-left: 0;
-  padding-left: clamp(24px, 7vw, 104px);
-  padding-right: 24px;
-  padding-top: 90px;
-  padding-bottom: 90px;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: cone-spin 46s linear infinite;
 }
 
-.hero h1 {
-  font-weight: 700;
-  font-size: 70px;
-  line-height: 1.05;
-  max-width: 740px;
-  margin: 0;
-  color: #fff;
+@keyframes cone-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-.hero h1 .hl {
+@media (prefers-reduced-motion: reduce) {
+  .hero-disk img {
+    animation: none;
+  }
+}
+
+.hero-row {
   position: relative;
-  color: #fff;
-  white-space: nowrap;
-}
-
-.hero h1 .hl::before {
-  content: '';
-  position: absolute;
-  left: -8px;
-  right: -8px;
-  top: 8%;
-  bottom: 8%;
-  background: var(--text);
-  border-radius: 14px;
-  z-index: -1;
-}
-
-.hero h1 .hl span {
-  color: var(--bg);
-}
-
-.hero-lead {
-  font-size: 20px;
-  line-height: 24px;
-  color: #fff;
-  max-width: 781px;
-  margin: 36px 0 40px;
-}
-
-.hero-actions {
+  z-index: 3;
+  width: 100%;
+  margin-top: min(300px, 46vw);
   display: flex;
-  gap: 24px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px 40px;
   flex-wrap: wrap;
 }
 
 .hero-features {
   display: flex;
-  gap: 50px;
-  margin-top: 70px;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 20px;
   flex-wrap: wrap;
 }
 
@@ -364,7 +364,45 @@ button {
 }
 
 /* ---------- What is chimney cake ---------- */
+.whatis {
+  position: relative;
+  z-index: 1;
+}
+
+/* Separator line at the section boundary, painted above the frosted layer. */
+.whatis::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: rgba(81, 74, 74, 0.5);
+  pointer-events: none;
+}
+
+/* One continuous frosted layer: blurs the cone-disk's lower half AND extends up
+   over the hero's button band (the row sits above it), so there's no seam. The
+   mask fades the blur in near the top, finishing above the row so the whole
+   button band sits on fully-frosted cones. */
+.whatis::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -200px;
+  bottom: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 100px, #000 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 100px, #000 100%);
+}
+
 .whatis .container {
+  position: relative;
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
   gap: 50px;
@@ -1161,11 +1199,54 @@ button {
   background: var(--card);
 }
 
-.map-embed iframe {
+.loc-map {
   width: 100%;
   height: 100%;
-  border: 0;
-  display: block;
+}
+
+.loc-map .leaflet-container {
+  width: 100%;
+  height: 100%;
+  background: var(--card);
+  font-family: 'Rubik', system-ui, sans-serif;
+}
+
+/* Custom pin — green normally, white/enlarged when its shop is selected. */
+.loc-pin svg path {
+  fill: var(--green);
+  stroke: #fff;
+  stroke-width: 1;
+}
+.loc-pin svg circle {
+  fill: #fff;
+}
+.loc-pin.active svg {
+  transform: scale(1.35);
+  transform-origin: bottom center;
+  filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.55));
+}
+.loc-pin.active svg path {
+  fill: #fff;
+}
+.loc-pin.active svg circle {
+  fill: var(--green);
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: var(--card);
+  color: var(--text);
+}
+.leaflet-popup-content {
+  margin: 12px 16px;
+  font-size: 14px;
+  line-height: 20px;
+}
+.leaflet-popup-content strong {
+  color: #fff;
+}
+.leaflet-popup-content-wrapper .leaflet-popup-close-button {
+  color: var(--text);
 }
 
 /* ---------- Gallery ---------- */
@@ -1849,8 +1930,14 @@ button {
   .section-title {
     font-size: 46px;
   }
-  .hero h1 {
-    font-size: 52px;
+  .hero-title {
+    font-size: 48px;
+  }
+  .hero-disk {
+    top: 208px;
+  }
+  .hero-row {
+    margin-top: min(340px, 48vw);
   }
   .whatis h2 {
     font-size: 46px;
@@ -1892,8 +1979,11 @@ button {
   .legal-title {
     font-size: 34px;
   }
-  .hero h1 {
-    font-size: 40px;
+  .hero-title {
+    font-size: 34px;
+  }
+  .hero-disk {
+    top: 172px;
   }
   .whatis .container {
     grid-template-columns: 1fr;
@@ -1969,6 +2059,15 @@ button {
   padding: 20px 16px 6px;
 }
 
+/* Trailing space so the last card can scroll to the centre snap point
+   (= half the leftover width beside a card), matching the other cards. */
+.cone-mtrack {
+  padding-right: max(11vw, calc((100vw - 330px) / 2));
+}
+.classic-mtrack {
+  padding-right: max(14vw, calc((100vw - 300px) / 2));
+}
+
 .cone-mtrack::-webkit-scrollbar,
 .classic-mtrack::-webkit-scrollbar {
   display: none;
@@ -2036,51 +2135,43 @@ button {
     transform: translateY(0);
   }
 
-  /* hero — image on top, text below */
+  /* hero — centred, compact on mobile */
   .hero {
-    flex-direction: column;
-    min-height: auto;
+    padding: 18px 0 40px;
   }
-  .hero-bg {
-    position: relative;
-    inset: auto;
-    height: 240px;
-    margin: 0 16px;
-    border-radius: 16px;
-  }
-  .hero-bg::after {
-    display: none;
-  }
-  .hero .container {
-    max-width: none;
-    margin: 0;
-    padding: 24px 16px 8px;
-  }
-  .hero h1 {
+  .hero-title {
     font-size: 30px;
     max-width: none;
   }
-  .hero-lead {
-    font-size: 16px;
-    margin: 16px 0 24px;
+  .hero-sub {
+    font-size: 15px;
+    margin-top: 10px;
+  }
+  .hero-disk {
+    top: 214px;
+    width: min(300px, 82vw);
+  }
+  .hero-row {
+    flex-direction: column;
+    gap: 26px;
+    margin-top: min(330px, 90vw);
+  }
+  .hero-features {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
   }
   .hero-actions {
     flex-direction: column;
     align-items: stretch;
+    width: 100%;
+    max-width: 320px;
   }
   .hero-actions .btn-3d {
     width: 100%;
   }
   .hero-actions .btn-3d:nth-child(2) {
     display: none;
-  }
-  .hero h1 .hl::before {
-    border-radius: 6px;
-  }
-  .hero-features {
-    flex-direction: column;
-    gap: 16px;
-    margin-top: 30px;
   }
 
   /* what is */

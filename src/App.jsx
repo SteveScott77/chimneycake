@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom'
+import L from 'leaflet'
+import 'leaflet/dist/leaflet.css'
 
 /* ---------------- Hooks ---------------- */
 function useIsMobile(bp = 640) {
@@ -90,17 +92,30 @@ const WHY_CARDS = [
 
 const LOC_HOURS = 'Sunday – Thursday: 11:00 – 22:00\nFriday – Saturday: 11:00 – 23:00'
 const LOCATIONS = [
-  { name: 'Váci utca 11/B.', img: '/assets/loc-vaci-11.png', addr: '1052 Budapest, Váci u. 11/B.', hours: LOC_HOURS, cid: '13599539892897907328', mapUrl: 'https://www.google.com/maps?cid=13599539892897907328' },
-  { name: 'Váci utca 23.', img: '/assets/loc-vaci-23.png', addr: '1052 Budapest, Váci u. 23.', hours: LOC_HOURS, query: 'Chimney Cake Shop, Váci u. 23, Budapest', mapUrl: 'https://share.google/VGsKJv7uaZEDIXWHU' },
-  { name: 'Zrínyi utca', img: '/assets/loc-zrinyi.jpg', addr: '1051 Budapest, Zrínyi u. 14.', hours: LOC_HOURS, cid: '145345763919310174', mapUrl: 'https://www.google.com/maps/place/CHIMNEY+CAKE+SHOP/@47.5005332,19.0506973,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dd003e48829f:0x2045f33c404ad5e!8m2!3d47.5005332!4d19.0506973!16s%2Fg%2F11z2mdtyzn' },
-  { name: 'Fashion street', img: '/assets/loc-fashion.png', addr: '1051 Budapest, Deák Ferenc u. 10.', hours: LOC_HOURS, cid: '16718429277565892994', mapUrl: 'https://www.google.com/maps?cid=16718429277565892994' },
-  { name: 'Deák tér', img: '/assets/loc-deak.png', addr: '1052 Budapest, Deák Ferenc tér 3.', hours: LOC_HOURS, cid: '15644560448914780515', mapUrl: 'https://www.google.com/maps?cid=15644560448914780515' },
-  { name: 'Sas utca', placeholder: true, addr: '1051 Budapest, Sas u. 10.', hours: LOC_HOURS, cid: '11826260180090323375', mapUrl: 'https://www.google.com/maps?cid=11826260180090323375' },
-  { name: 'Kígyó utca', img: '/assets/loc-kigyo.jpg', addr: '1052 Budapest, Kígyó u. 2.', hours: LOC_HOURS, cid: '3128396529710505300', mapUrl: 'https://www.google.com/maps/place/Budapest,+K%C3%ADgy%C3%B3+u.+2,+1052/@47.4930185,19.0533128,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc46b0a09dbd:0x2b6a4c119df59d54!8m2!3d47.4930185!4d19.0533128!16s%2Fg%2F11w83vp_xv' },
-  { name: 'Akvárium', img: '/assets/loc-akvarium.png', addr: '1051 Budapest, Erzsébet tér 12.', hours: LOC_HOURS, cid: '18311191613973595767', mapUrl: 'https://www.google.com/maps?cid=18311191613973595767' },
-  { name: 'Madách tér', img: '/assets/loc-madach.png', addr: '1075 Budapest, Károly krt. 13-15.', hours: LOC_HOURS, cid: '16663013220313701957', mapUrl: 'https://www.google.com/maps?cid=16663013220313701957' },
-  { name: 'Bazilika', img: '/assets/loc-bazilika.jpg', addr: '1051 Budapest, Szent István tér 2.', hours: LOC_HOURS, cid: '11089372304823282514', mapUrl: 'https://www.google.com/maps?cid=11089372304823282514' },
+  { name: 'Váci utca 11/B.', img: '/assets/loc-vaci-11.png', addr: '1052 Budapest, Váci u. 11/B.', hours: LOC_HOURS, lat: 47.49484, lng: 19.051843, cid: '13599539892897907328', mapUrl: 'https://www.google.com/maps?cid=13599539892897907328' },
+  { name: 'Váci utca 23.', img: '/assets/loc-vaci-23.png', addr: '1052 Budapest, Váci u. 23.', hours: LOC_HOURS, lat: 47.493713, lng: 19.052512, query: 'Chimney Cake Shop, Váci u. 23, Budapest', mapUrl: 'https://share.google/VGsKJv7uaZEDIXWHU' },
+  { name: 'Zrínyi utca', img: '/assets/loc-zrinyi.jpg', addr: '1051 Budapest, Zrínyi u. 14.', hours: LOC_HOURS, lat: 47.5005332, lng: 19.0506973, cid: '145345763919310174', mapUrl: 'https://www.google.com/maps/place/CHIMNEY+CAKE+SHOP/@47.5005332,19.0506973,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dd003e48829f:0x2045f33c404ad5e!8m2!3d47.5005332!4d19.0506973!16s%2Fg%2F11z2mdtyzn' },
+  { name: 'Fashion street', img: '/assets/loc-fashion.png', addr: '1051 Budapest, Deák Ferenc u. 10.', hours: LOC_HOURS, lat: 47.496542, lng: 19.051615, cid: '16718429277565892994', mapUrl: 'https://www.google.com/maps?cid=16718429277565892994' },
+  { name: 'Deák tér', img: '/assets/loc-deak.png', addr: '1052 Budapest, Deák Ferenc tér 3.', hours: LOC_HOURS, lat: 47.496873, lng: 19.053994, cid: '15644560448914780515', mapUrl: 'https://www.google.com/maps?cid=15644560448914780515' },
+  { name: 'Sas utca', placeholder: true, addr: '1051 Budapest, Sas u. 10.', hours: LOC_HOURS, lat: 47.500776, lng: 19.051817, cid: '11826260180090323375', mapUrl: 'https://www.google.com/maps?cid=11826260180090323375' },
+  { name: 'Kígyó utca', img: '/assets/loc-kigyo.jpg', addr: '1052 Budapest, Kígyó u. 2.', hours: LOC_HOURS, lat: 47.4930185, lng: 19.0533128, cid: '3128396529710505300', mapUrl: 'https://www.google.com/maps/place/Budapest,+K%C3%ADgy%C3%B3+u.+2,+1052/@47.4930185,19.0533128,17z/data=!3m1!4b1!4m6!3m5!1s0x4741dc46b0a09dbd:0x2b6a4c119df59d54!8m2!3d47.4930185!4d19.0533128!16s%2Fg%2F11w83vp_xv' },
+  { name: 'Akvárium', img: '/assets/loc-akvarium.png', addr: '1051 Budapest, Erzsébet tér 12.', hours: LOC_HOURS, lat: 47.498675, lng: 19.054162, cid: '18311191613973595767', mapUrl: 'https://www.google.com/maps?cid=18311191613973595767' },
+  { name: 'Madách tér', img: '/assets/loc-madach.png', addr: '1075 Budapest, Károly krt. 13-15.', hours: LOC_HOURS, lat: 47.496951, lng: 19.057115, cid: '16663013220313701957', mapUrl: 'https://www.google.com/maps?cid=16663013220313701957' },
+  { name: 'Bazilika', img: '/assets/loc-bazilika.jpg', addr: '1051 Budapest, Szent István tér 2.', hours: LOC_HOURS, lat: 47.500189, lng: 19.05374, cid: '11089372304823282514', mapUrl: 'https://www.google.com/maps?cid=11089372304823282514' },
 ]
+
+// Custom map pin (teardrop). Colours come from CSS so the active pin can differ.
+const PIN_SVG =
+  '<svg viewBox="0 0 24 32" width="30" height="40"><path d="M12 0C5.4 0 0 5.4 0 12c0 8.4 12 20 12 20s12-11.6 12-20C24 5.4 18.6 0 12 0z"/><circle cx="12" cy="12" r="4.5"/></svg>'
+const makePin = (active) =>
+  L.divIcon({
+    className: `loc-pin${active ? ' active' : ''}`,
+    html: PIN_SVG,
+    iconSize: [30, 40],
+    iconAnchor: [15, 40],
+    popupAnchor: [0, -36],
+  })
+const LOC_BOUNDS = LOCATIONS.map((l) => [l.lat, l.lng])
 
 const REVIEWS = [
   {
@@ -206,7 +221,9 @@ function Header() {
           <div className="nav-links">
             <a href="/#products">Products</a>
             <a href="/#story">Our Story</a>
+            <a href="/#gallery">Gallery</a>
             <Link to="/franchise">Franchise</Link>
+            <a href="mailto:chimneycakeshop.hu@gmail.com">Contact us</a>
           </div>
           <a className="btn-3d sm" href="/#locations">Locations</a>
           <button
@@ -225,7 +242,9 @@ function Header() {
         <div className="mobile-menu-inner">
           <a href="/#products" onClick={closeMenu}>Products</a>
           <a href="/#story" onClick={closeMenu}>Our Story</a>
+          <a href="/#gallery" onClick={closeMenu}>Gallery</a>
           <Link to="/franchise" onClick={closeMenu}>Franchise</Link>
+          <a href="mailto:chimneycakeshop.hu@gmail.com" onClick={closeMenu}>Contact us</a>
         </div>
       </div>
     </header>
@@ -233,54 +252,66 @@ function Header() {
 }
 
 /* ---------------- Hero ---------------- */
+const HERO_FEATURES = [
+  {
+    label: 'Handmade',
+    icon: (
+      <svg width="36" height="19" viewBox="0 0 36 19" fill="none" aria-hidden>
+        <path d="M1.36719 11.2294L8.37584 4.58961C8.86768 4.1613 10.5153 3.30469 13.1712 3.30469C15.8272 3.30469 18.4585 3.30469 19.4421 3.30469C20.3029 3.4872 22.0243 4.29489 22.0243 6.0655C22.0243 7.83611 20.3029 8.52468 19.4421 8.64764H13.909" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M22 6.63306L27 2.13498C28.3098 0.760031 31.9856 0.164924 34.9367 3.11626L24.2392 13.8132C23.5015 14.428 21.6571 15.6576 20.1816 15.6576C18.7061 15.6576 14.074 15.6577 11 15.6577C11 15.6577 9.5 15.6331 6.53315 17.1331L1 11.6L1.36888 11.2311" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Freshly baked',
+    icon: (
+      <svg viewBox="0 0 21 21" fill="none" aria-hidden>
+        <path d="M4.31128 20C2.20301 18.4519 -1.03071 15.1462 2.73008 11.1333C8.07201 5.43333 2.73004 1 2.73004 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        <path d="M11.7605 20C9.65223 18.4519 6.41851 15.1462 10.1793 11.1333C15.5212 5.43333 10.1793 1 10.1793 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        <path d="M19.2058 20C17.0975 18.4519 13.8638 15.1462 17.6246 11.1333C22.9665 5.43333 17.6246 1 17.6246 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  {
+    label: 'City centre locations',
+    icon: (
+      <svg viewBox="0 0 20 26" fill="none" aria-hidden>
+        <path d="M10 1C14.9703 1 19 5.01482 19 9.96666C19 16.1941 10 18.9128 10 25C5.91876 18.7965 1 16.1941 1 9.96666C1 5.01482 5.02975 1 10 1Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M1 25H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M9.83254 13.5706C11.9233 13.5706 13.6182 11.882 13.6182 9.79898C13.6182 7.71596 11.9233 6.02734 9.83254 6.02734C7.74177 6.02734 6.04688 7.71596 6.04688 9.79898C6.04688 11.882 7.74177 13.5706 9.83254 13.5706Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+  },
+]
+
 function Hero() {
   return (
     <section className="hero" id="top">
-      <div className="hero-bg">
-        <img src="/assets/banner.png" alt="" />
+      <div className="hero-disk" aria-hidden="true">
+        <span className="hero-disk-glow" />
+        <img src="/assets/hero-cones.png" alt="" fetchpriority="high" />
       </div>
-      <div className="container">
-        <h1>
-          Discover Budapest with{' '}
-          <span className="hl"><span>a chimney cake</span></span>{' '}
-          <span className="hl"><span>in your hand</span></span>
+      <div className="container hero-inner">
+        <h1 className="hero-title">
+          Discover Budapest with
+          <br />
+          <span>a chimney cake in your hand</span>
         </h1>
-        <p className="hero-lead">
+        <p className="hero-sub">
           A warm, sweet stop while exploring Budapest’s most iconic streets.
         </p>
-        <div className="hero-actions">
-          <a className="btn-3d" href="#locations">Find the nearest</a>
-          <a className="btn-3d" href="#products">Explore our treats</a>
-        </div>
-        <div className="hero-features">
-          <div className="feature">
-            <span className="icon">
-              <svg width="36" height="19" viewBox="0 0 36 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M1.36719 11.2294L8.37584 4.58961C8.86768 4.1613 10.5153 3.30469 13.1712 3.30469C15.8272 3.30469 18.4585 3.30469 19.4421 3.30469C20.3029 3.4872 22.0243 4.29489 22.0243 6.0655C22.0243 7.83611 20.3029 8.52468 19.4421 8.64764H13.909" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M22 6.63306L27 2.13498C28.3098 0.760031 31.9856 0.164924 34.9367 3.11626L24.2392 13.8132C23.5015 14.428 21.6571 15.6576 20.1816 15.6576C18.7061 15.6576 14.074 15.6577 11 15.6577C11 15.6577 9.5 15.6331 6.53315 17.1331L1 11.6L1.36888 11.2311" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-            </span>
-            Handmade
+        <div className="hero-row">
+          <div className="hero-features">
+            {HERO_FEATURES.map((f) => (
+              <div className="feature" key={f.label}>
+                <span className="icon">{f.icon}</span>
+                {f.label}
+              </div>
+            ))}
           </div>
-          <div className="feature">
-            <span className="icon">
-              <svg viewBox="0 0 21 21" fill="none" aria-hidden>
-                <path d="M4.31128 20C2.20301 18.4519 -1.03071 15.1462 2.73008 11.1333C8.07201 5.43333 2.73004 1 2.73004 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                <path d="M11.7605 20C9.65223 18.4519 6.41851 15.1462 10.1793 11.1333C15.5212 5.43333 10.1793 1 10.1793 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                <path d="M19.2058 20C17.0975 18.4519 13.8638 15.1462 17.6246 11.1333C22.9665 5.43333 17.6246 1 17.6246 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              </svg>
-            </span>
-            Freshly baked
-          </div>
-          <div className="feature">
-            <span className="icon">
-              <svg viewBox="0 0 20 26" fill="none" aria-hidden>
-                <path d="M10 1C14.9703 1 19 5.01482 19 9.96666C19 16.1941 10 18.9128 10 25C5.91876 18.7965 1 16.1941 1 9.96666C1 5.01482 5.02975 1 10 1Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M1 25H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M9.83254 13.5706C11.9233 13.5706 13.6182 11.882 13.6182 9.79898C13.6182 7.71596 11.9233 6.02734 9.83254 6.02734C7.74177 6.02734 6.04688 7.71596 6.04688 9.79898C6.04688 11.882 7.74177 13.5706 9.83254 13.5706Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </span>
-            City centre locations
+          <div className="hero-actions">
+            <a className="btn-3d" href="#locations">Find the nearest</a>
+            <a className="btn-3d" href="#products">Explore our treats</a>
           </div>
         </div>
       </div>
@@ -350,6 +381,15 @@ function MeetTheCone() {
   const isMobile = useIsMobile()
   const [active, setActive] = useState(0)
   const scrollRef = useRef(null)
+  const mtrackRef = useRef(null)
+
+  const slide = (dir) => {
+    const el = mtrackRef.current
+    if (!el) return
+    const card = el.querySelector('.cone-mcard')
+    const step = card ? card.offsetWidth + 18 : el.clientWidth * 0.8
+    el.scrollBy({ left: dir * step, behavior: 'smooth' })
+  }
 
   useEffect(() => {
     if (isMobile) return
@@ -399,13 +439,21 @@ function MeetTheCone() {
             <img src="/assets/nutella-logo.png" alt="Nutella" />
           </div>
         </div>
-        <div className="cone-mtrack">
+        <div className="cone-mtrack" ref={mtrackRef}>
           {CONE_FLAVORS.map((f) => (
             <div className="cone-mcard" key={f.name}>
               <img src={f.img} alt={f.name} loading="lazy" />
               {f.note && <p className="cone-mnote">{f.note}</p>}
             </div>
           ))}
+        </div>
+        <div className="carousel-nav">
+          <button className="round-btn" onClick={() => slide(-1)} aria-label="Previous">
+            <ArrowLeft />
+          </button>
+          <button className="round-btn" onClick={() => slide(1)} aria-label="Next">
+            <ArrowRight />
+          </button>
         </div>
       </section>
     )
@@ -699,20 +747,61 @@ function Locations() {
     window.addEventListener('pointerup', up)
   }
 
-  const selected = open >= 0 ? LOCATIONS[open] : null
-  const mapSrc =
-    selected && selected.cid
-      ? `https://www.google.com/maps?cid=${selected.cid}&output=embed`
-      : selected && selected.query
-        ? `https://www.google.com/maps?q=${encodeURIComponent(
-            selected.query,
-          )}&z=17&output=embed`
-        : `https://www.google.com/maps?q=${encodeURIComponent(
-            'Chimney Cake Shop, Budapest',
-          )}&z=13&output=embed`
-  const mapTitle = selected
-    ? `${selected.name} — ${selected.addr}`
-    : 'Chimney Cake Shop locations in Budapest'
+  const mapRef = useRef(null)
+  const mapObjRef = useRef(null)
+  const markersRef = useRef([])
+
+  // Custom map that shows ONLY our shops (OpenStreetMap tiles, no Google POIs).
+  useEffect(() => {
+    if (mapObjRef.current || !mapRef.current) return
+    const map = L.map(mapRef.current, { scrollWheelZoom: false })
+    mapObjRef.current = map
+    // Esri Dark Gray Canvas: clean dark basemap with no business POIs, so the
+    // only things on the map are our own shop pins. Keyless and matches the theme.
+    L.tileLayer(
+      'https://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+      {
+        attribution: 'Tiles &copy; Esri',
+        maxNativeZoom: 16,
+        maxZoom: 18,
+      },
+    ).addTo(map)
+    markersRef.current = LOCATIONS.map((l, i) => {
+      const m = L.marker([l.lat, l.lng], { icon: makePin(false) }).addTo(map)
+      m.bindPopup(`<strong>${l.name}</strong><br>${l.addr}`)
+      m.on('click', () => setOpen(i))
+      return m
+    })
+    map.fitBounds(LOC_BOUNDS, { padding: [40, 40] })
+    const refit = () => {
+      map.invalidateSize()
+      if (open < 0) map.fitBounds(LOC_BOUNDS, { padding: [40, 40] })
+    }
+    const t = setTimeout(refit, 100)
+    const ro = new ResizeObserver(() => map.invalidateSize())
+    ro.observe(mapRef.current)
+    return () => {
+      clearTimeout(t)
+      ro.disconnect()
+      map.remove()
+      mapObjRef.current = null
+    }
+  }, [])
+
+  // Highlight + focus the selected shop; otherwise show all pins.
+  useEffect(() => {
+    const map = mapObjRef.current
+    if (!map) return
+    markersRef.current.forEach((m, i) => m.setIcon(makePin(i === open)))
+    if (open >= 0 && markersRef.current[open]) {
+      const l = LOCATIONS[open]
+      map.setView([l.lat, l.lng], 16, { animate: true })
+      markersRef.current[open].openPopup()
+    } else {
+      map.closePopup()
+      map.fitBounds(LOC_BOUNDS, { padding: [40, 40] })
+    }
+  }, [open])
 
   return (
     <section className="section locations" id="locations">
@@ -778,13 +867,7 @@ function Locations() {
         </div>
         <div className="progress"><span ref={fillRef} /></div>
         <div className="map-embed" id="map">
-          <iframe
-            title={mapTitle}
-            src={mapSrc}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            allowFullScreen
-          />
+          <div className="loc-map" ref={mapRef} aria-label="Chimney Cake Shop locations in Budapest" />
         </div>
       </div>
     </section>
@@ -823,7 +906,7 @@ function Gallery() {
   const next = () => setActive((a) => Math.min(GALLERY.length - 1, a + 1))
 
   return (
-    <section className="section gallery">
+    <section className="section gallery" id="gallery">
       <h2 className="section-title center">Gallery</h2>
       <div className="gallery-window">
         <div
@@ -1127,7 +1210,7 @@ function Footer() {
       <div className="container footer-top">
         <img className="footer-emblem" src="/assets/logo-emblema.png" alt="Chimney Cake Shop" loading="lazy" />
         <div className="footer-col">
-          <h5>Shops</h5>
+          <h5>Our shops</h5>
           {LOCATIONS.map((l, i) => (
             <a
               key={i}
@@ -1143,8 +1226,10 @@ function Footer() {
           <h5>Sitemap</h5>
           <a href="/#products">Products</a>
           <a href="/#story">Our Story</a>
+          <a href="/#gallery">Gallery</a>
           <Link to="/franchise">Franchise</Link>
           <a href="/#locations">Locations</a>
+          <a href="mailto:chimneycakeshop.hu@gmail.com">Contact us</a>
         </div>
         <div className="footer-col">
           <h5>Contact</h5>
