@@ -236,7 +236,6 @@ button {
 }
 
 .hero-inner {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -381,10 +380,9 @@ button {
   pointer-events: none;
 }
 
-/* One continuous frosted layer: blurs the cone-disk's lower half AND extends up
-   over the hero's button band (the row sits above it), so there's no seam. The
-   mask fades the blur in near the top, finishing above the row so the whole
-   button band sits on fully-frosted cones. */
+/* Solid black layer that covers the cone-disk's lower half and extends up over
+   the hero's button band, so both the button band and this section read as
+   plain black (no blur). The top fades in so the sharp fan melts into black. */
 .whatis::before {
   content: '';
   position: absolute;
@@ -394,11 +392,7 @@ button {
   bottom: 0;
   z-index: -1;
   pointer-events: none;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 100px, #000 100%);
-  mask-image: linear-gradient(to bottom, transparent 0, #000 100px, #000 100%);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, #000 100px, #000 100%);
 }
 
 .whatis .container {
@@ -734,7 +728,7 @@ button {
 
 .classic-scroll {
   position: relative;
-  height: 340vh;
+  height: 420vh;
 }
 
 .classic-sticky {
@@ -903,7 +897,7 @@ button {
 
 .carousel-nav {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   gap: 12px;
   margin-top: 28px;
 }
@@ -2120,14 +2114,14 @@ button {
     font-size: 30px;
   }
 
-  /* header — big logo intersecting the hero, shrinks into place on scroll */
+  /* header — logo kept clear of the hero heading */
   .header .container {
     height: 72px;
   }
   .logo-emblem {
-    width: 120px;
-    height: 120px;
-    transform: translateY(32px);
+    width: 96px;
+    height: 96px;
+    transform: translateY(6px);
   }
   .header.scrolled .logo-emblem {
     width: 52px;
@@ -2135,9 +2129,10 @@ button {
     transform: translateY(0);
   }
 
-  /* hero — centred, compact on mobile */
+  /* hero — centred, compact on mobile; disk flows inline so it can't overlap
+     the heading above or the feature row below */
   .hero {
-    padding: 18px 0 40px;
+    padding: 32px 0 40px;
   }
   .hero-title {
     font-size: 30px;
@@ -2148,13 +2143,18 @@ button {
     margin-top: 10px;
   }
   .hero-disk {
-    top: 214px;
-    width: min(300px, 82vw);
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    z-index: auto;
+    width: min(250px, 74vw);
+    margin: 22px 0 44px;
   }
   .hero-row {
     flex-direction: column;
     gap: 26px;
-    margin-top: min(330px, 90vw);
+    margin-top: 0;
   }
   .hero-features {
     flex-direction: column;
@@ -2172,6 +2172,13 @@ button {
   }
   .hero-actions .btn-3d:nth-child(2) {
     display: none;
+  }
+
+  /* franchise / legal pages start right under the header — keep their heading
+     clear of the (unscrolled) overlapping logo */
+  .franchise,
+  .legal {
+    padding-top: 70px;
   }
 
   /* what is */

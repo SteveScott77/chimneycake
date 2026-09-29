@@ -223,7 +223,7 @@ function Header() {
             <a href="/#story">Our Story</a>
             <a href="/#gallery">Gallery</a>
             <Link to="/franchise">Franchise</Link>
-            <a href="mailto:chimneycakeshop.hu@gmail.com">Contact us</a>
+            <a href="mailto:info@kurtoskalacs.hu">Contact us</a>
           </div>
           <a className="btn-3d sm" href="/#locations">Locations</a>
           <button
@@ -244,7 +244,7 @@ function Header() {
           <a href="/#story" onClick={closeMenu}>Our Story</a>
           <a href="/#gallery" onClick={closeMenu}>Gallery</a>
           <Link to="/franchise" onClick={closeMenu}>Franchise</Link>
-          <a href="mailto:chimneycakeshop.hu@gmail.com" onClick={closeMenu}>Contact us</a>
+          <a href="mailto:info@kurtoskalacs.hu" onClick={closeMenu}>Contact us</a>
         </div>
       </div>
     </header>
@@ -287,10 +287,6 @@ const HERO_FEATURES = [
 function Hero() {
   return (
     <section className="hero" id="top">
-      <div className="hero-disk" aria-hidden="true">
-        <span className="hero-disk-glow" />
-        <img src="/assets/hero-cones.png" alt="" fetchpriority="high" />
-      </div>
       <div className="container hero-inner">
         <h1 className="hero-title">
           Discover Budapest with
@@ -300,6 +296,10 @@ function Hero() {
         <p className="hero-sub">
           A warm, sweet stop while exploring Budapest’s most iconic streets.
         </p>
+        <div className="hero-disk" aria-hidden="true">
+          <span className="hero-disk-glow" />
+          <img src="/assets/hero-cones.png" alt="" fetchpriority="high" />
+        </div>
         <div className="hero-row">
           <div className="hero-features">
             {HERO_FEATURES.map((f) => (
@@ -578,8 +578,12 @@ function ClassicExperience() {
       const total = el.offsetHeight - window.innerHeight
       const scrolled = Math.min(Math.max(-el.getBoundingClientRect().top, 0), total)
       const progress = total > 0 ? scrolled / total : 0
+      // Cards finish moving before the end, then dwell on the last cone for the
+      // remaining scroll (the section stays pinned/motionless) before releasing.
+      const HOLD = 0.25
+      const moveProgress = Math.min(progress / (1 - HOLD), 1)
       const max = Math.max(0, cards.scrollWidth - track.clientWidth)
-      cards.style.transform = `translateX(${-progress * max}px)`
+      cards.style.transform = `translateX(${-moveProgress * max}px)`
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     window.addEventListener('resize', onScroll)
@@ -1229,13 +1233,14 @@ function Footer() {
           <a href="/#gallery">Gallery</a>
           <Link to="/franchise">Franchise</Link>
           <a href="/#locations">Locations</a>
-          <a href="mailto:chimneycakeshop.hu@gmail.com">Contact us</a>
+          <a href="mailto:info@kurtoskalacs.hu">Contact us</a>
         </div>
         <div className="footer-col">
           <h5>Contact</h5>
           <p>Magyarország</p>
           <p>Budapest</p>
           <p>Váci utca 23.</p>
+          <a href="mailto:info@kurtoskalacs.hu">info@kurtoskalacs.hu</a>
         </div>
       </div>
       <div className="footer-bar">
@@ -1250,7 +1255,6 @@ function Footer() {
             </div>
           </div>
           <div className="footer-right">
-            <a className="footer-email" href="mailto:chimneycakeshop.hu@gmail.com">chimneycakeshop.hu@gmail.com</a>
             <div className="socials">
               <a
                 href="https://www.facebook.com/chimneycakeshop.hu"
